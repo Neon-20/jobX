@@ -36,20 +36,19 @@ export default function Header() {
     <header className="w-full px-6 py-6 bg-transparent backdrop-blur-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-amber-600 rounded-lg flex items-center justify-center shadow-lg">
-            <div className="w-4 h-4 bg-white rounded-sm"></div>
-          </div>
-          <span className="text-xl font-semibold text-amber-900">Clickity</span>
+        <div className="flex items-center">
+          <span className="text-2xl text-amber-900 tracking-wide font-belleza font-bold">
+            JobX
+          </span>
         </div>
 
         {/* Navigation */}
         <nav className="hidden md:flex items-center gap-8">
-          <a href="#" className="text-amber-800 hover:text-amber-900 font-medium transition-colors">Home</a>
-          <a href="#" className="text-amber-800 hover:text-amber-900 font-medium transition-colors">Create New</a>
-          <a href="#" className="text-amber-800 hover:text-amber-900 font-medium transition-colors">Projects</a>
-          <a href="#" className="text-amber-800 hover:text-amber-900 font-medium transition-colors">Channels</a>
-          <a href="#" className="text-amber-800 hover:text-amber-900 font-medium transition-colors">My Account</a>
+          <a href="#" className="text-amber-800 hover:text-amber-900 font-medium transition-colors">Find Jobs</a>
+          <a href="#" className="text-amber-800 hover:text-amber-900 font-medium transition-colors">Companies</a>
+          <a href="#" className="text-amber-800 hover:text-amber-900 font-medium transition-colors">Post a Job</a>
+          <a href="#" className="text-amber-800 hover:text-amber-900 font-medium transition-colors">Career Advice</a>
+          <a href="#" className="text-amber-800 hover:text-amber-900 font-medium transition-colors">Dashboard</a>
         </nav>
 
         {/* Auth Buttons */}

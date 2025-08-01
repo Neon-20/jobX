@@ -96,7 +96,7 @@ export default function CTASection() {
             viewport={{ once: true }}
           >
             <div className="text-center">
-              <div className="text-3xl font-bold mb-2">50K+</div>
+              <div className="text-3xl font-bold mb-2">5K+</div>
               <div className="text-amber-200 text-sm">Active Jobs</div>
             </div>
             <div className="text-center">

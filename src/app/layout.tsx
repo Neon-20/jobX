@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, Belleza } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 
@@ -7,6 +7,13 @@ const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+const belleza = Belleza({
+  variable: "--font-belleza",
+  subsets: ["latin"],
+  weight: ["400"],
   display: "swap",
 });
 
@@ -23,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.variable} font-sans antialiased bg-gradient-to-br from-amber-50 via-stone-50 to-orange-50`}
+        className={`${poppins.variable} ${belleza.variable} font-sans antialiased bg-gradient-to-br from-amber-50 via-stone-50 to-orange-50`}
       >
         <AuthProvider>
           {children}

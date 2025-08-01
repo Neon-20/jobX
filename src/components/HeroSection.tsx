@@ -62,17 +62,91 @@ export default function HeroSection() {
       aria-label="Hero section"
       data-section="hero"
     >
-      {/* Subtle Geometric Shapes */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Large circle - top right */}
+      {/* Falling Geometric Particles */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Large background circles */}
         <div className="absolute -top-20 -right-20 w-80 h-80 bg-amber-200/20 rounded-full blur-3xl"></div>
-        {/* Medium circle - bottom left */}
         <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-orange-200/30 rounded-full blur-2xl"></div>
-        {/* Small geometric shapes */}
-        <div className="absolute top-1/4 left-10 w-4 h-4 bg-amber-300/40 rotate-45 rounded-sm"></div>
-        <div className="absolute top-1/3 right-20 w-6 h-6 bg-orange-300/30 rounded-full"></div>
-        <div className="absolute bottom-1/4 left-1/4 w-3 h-3 bg-amber-400/50 rotate-12"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-5 h-5 bg-orange-200/40 rotate-45"></div>
+
+        {/* Randomly Moving Particles with Custom Keyframes */}
+        <style jsx>{`
+          @keyframes float1 {
+            0% { transform: translate(0px, 0px) rotate(0deg); }
+            25% { transform: translate(30px, -20px) rotate(90deg); }
+            50% { transform: translate(-20px, 30px) rotate(180deg); }
+            75% { transform: translate(40px, 10px) rotate(270deg); }
+            100% { transform: translate(0px, 0px) rotate(360deg); }
+          }
+          @keyframes float2 {
+            0% { transform: translate(0px, 0px) rotate(0deg); }
+            25% { transform: translate(-25px, 35px) rotate(-90deg); }
+            50% { transform: translate(35px, -15px) rotate(-180deg); }
+            75% { transform: translate(-15px, -25px) rotate(-270deg); }
+            100% { transform: translate(0px, 0px) rotate(-360deg); }
+          }
+          @keyframes float3 {
+            0% { transform: translate(0px, 0px) rotate(0deg); }
+            33% { transform: translate(20px, 25px) rotate(120deg); }
+            66% { transform: translate(-30px, -10px) rotate(240deg); }
+            100% { transform: translate(0px, 0px) rotate(360deg); }
+          }
+          @keyframes float4 {
+            0% { transform: translate(0px, 0px) rotate(0deg); }
+            20% { transform: translate(-35px, 20px) rotate(-72deg); }
+            40% { transform: translate(15px, -30px) rotate(-144deg); }
+            60% { transform: translate(25px, 25px) rotate(-216deg); }
+            80% { transform: translate(-10px, -15px) rotate(-288deg); }
+            100% { transform: translate(0px, 0px) rotate(-360deg); }
+          }
+          @keyframes float5 {
+            0% { transform: translate(0px, 0px) rotate(0deg); }
+            50% { transform: translate(-40px, -30px) rotate(180deg); }
+            100% { transform: translate(0px, 0px) rotate(360deg); }
+          }
+          .float1 { animation: float1 6s ease-in-out infinite; }
+          .float2 { animation: float2 8s ease-in-out infinite; }
+          .float3 { animation: float3 7s ease-in-out infinite; }
+          .float4 { animation: float4 9s ease-in-out infinite; }
+          .float5 { animation: float5 5s ease-in-out infinite; }
+        `}</style>
+
+        {/* Squares - Randomly positioned and moving */}
+        <div className="absolute left-[7%] top-[20%] w-3 h-3 bg-amber-400/20 float1" style={{animationDelay: '0s'}}></div>
+        <div className="absolute left-[23%] top-[60%] w-4 h-4 bg-orange-300/15 float2" style={{animationDelay: '2s'}}></div>
+        <div className="absolute left-[41%] top-[35%] w-2 h-2 bg-amber-500/25 float3" style={{animationDelay: '4s'}}></div>
+        <div className="absolute left-[67%] top-[75%] w-5 h-5 bg-orange-400/15 float4" style={{animationDelay: '1s'}}></div>
+        <div className="absolute left-[84%] top-[15%] w-3 h-3 bg-amber-300/20 float5" style={{animationDelay: '3s'}}></div>
+        <div className="absolute left-[15%] top-[80%] w-4 h-4 bg-orange-500/18 float1" style={{animationDelay: '5s'}}></div>
+        <div className="absolute left-[92%] top-[45%] w-2 h-2 bg-amber-400/25 float2" style={{animationDelay: '1.5s'}}></div>
+
+        {/* Circles - Randomly positioned and moving */}
+        <div className="absolute left-[12%] top-[25%] w-4 h-4 bg-amber-400/18 rounded-full float3" style={{animationDelay: '1.5s'}}></div>
+        <div className="absolute left-[34%] top-[70%] w-3 h-3 bg-orange-300/20 rounded-full float4" style={{animationDelay: '3.5s'}}></div>
+        <div className="absolute left-[58%] top-[10%] w-5 h-5 bg-amber-500/15 rounded-full float5" style={{animationDelay: '0.5s'}}></div>
+        <div className="absolute left-[76%] top-[55%] w-2 h-2 bg-orange-400/25 rounded-full float1" style={{animationDelay: '2.5s'}}></div>
+        <div className="absolute left-[89%] top-[85%] w-4 h-4 bg-amber-300/18 rounded-full float2" style={{animationDelay: '4.5s'}}></div>
+        <div className="absolute left-[3%] top-[40%] w-3 h-3 bg-orange-500/20 rounded-full float3" style={{animationDelay: '6s'}}></div>
+        <div className="absolute left-[45%] top-[90%] w-2 h-2 bg-amber-400/28 rounded-full float4" style={{animationDelay: '0.8s'}}></div>
+
+        {/* Triangles - Randomly positioned and moving */}
+        <div className="absolute left-[18%] top-[30%] w-0 h-0 border-l-2 border-r-2 border-b-4 border-transparent border-b-amber-400/20 float5" style={{animationDelay: '2.2s'}}></div>
+        <div className="absolute left-[52%] top-[65%] w-0 h-0 border-l-3 border-r-3 border-b-6 border-transparent border-b-orange-300/18 float1" style={{animationDelay: '4.2s'}}></div>
+        <div className="absolute left-[71%] top-[20%] w-0 h-0 border-l-2 border-r-2 border-b-4 border-transparent border-b-amber-500/25 float2" style={{animationDelay: '6.2s'}}></div>
+        <div className="absolute left-[86%] top-[50%] w-0 h-0 border-l-3 border-r-3 border-b-6 border-transparent border-b-orange-400/15 float3" style={{animationDelay: '1.2s'}}></div>
+        <div className="absolute left-[9%] top-[75%] w-0 h-0 border-l-2 border-r-2 border-b-4 border-transparent border-b-amber-300/28 float4" style={{animationDelay: '3.2s'}}></div>
+
+        {/* Hexagons - Randomly positioned and moving */}
+        <div className="absolute left-[26%] top-[15%] w-4 h-4 bg-amber-400/18 float1" style={{clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)', animationDelay: '3.8s'}}></div>
+        <div className="absolute left-[63%] top-[85%] w-3 h-3 bg-orange-300/20 float2" style={{clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)', animationDelay: '5.8s'}}></div>
+        <div className="absolute left-[81%] top-[35%] w-5 h-5 bg-amber-500/15 float3" style={{clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)', animationDelay: '1.8s'}}></div>
+        <div className="absolute left-[5%] top-[60%] w-3 h-3 bg-orange-400/25 float4" style={{clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)', animationDelay: '4.8s'}}></div>
+
+        {/* Diamonds - Randomly positioned and moving */}
+        <div className="absolute left-[37%] top-[25%] w-3 h-3 bg-amber-400/20 float5" style={{clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', animationDelay: '2.7s'}}></div>
+        <div className="absolute left-[54%] top-[45%] w-4 h-4 bg-orange-300/18 float1" style={{clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', animationDelay: '4.7s'}}></div>
+        <div className="absolute left-[73%] top-[80%] w-2 h-2 bg-amber-500/25 float2" style={{clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', animationDelay: '6.7s'}}></div>
+        <div className="absolute left-[91%] top-[10%] w-5 h-5 bg-orange-400/15 float3" style={{clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', animationDelay: '0.7s'}}></div>
+        <div className="absolute left-[14%] top-[55%] w-3 h-3 bg-amber-300/20 float4" style={{clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', animationDelay: '5.7s'}}></div>
       </div>
 
 
@@ -108,7 +182,7 @@ export default function HeroSection() {
             </h1>
             <p className="text-center text-lg md:text-xl text-amber-800 font-medium mb-8 max-w-3xl mx-auto">
               Join thousands of professionals who found their perfect career match.
-              Search from 50,000+ jobs at top companies worldwide.
+              Search from 5000+ jobs at top companies worldwide.
             </p>
           </div>
 
@@ -138,7 +212,7 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.7 }}
           >
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-amber-900 mb-2">50K+</div>
+              <div className="text-3xl md:text-4xl font-bold text-amber-900 mb-2">5K+</div>
               <div className="text-gray-600 font-medium">Active Jobs</div>
             </div>
             <div className="text-center">
