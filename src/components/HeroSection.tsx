@@ -85,10 +85,26 @@ export default function HeroSection() {
               ref={titleRef}
               className="text-5xl md:text-6xl lg:text-7xl font-semibold text-black mb-8 leading-tight tracking-tight"
               style={{ fontFamily: '"Inter", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}
-              aria-label="Main heading: Find your dream job today"
+              aria-label="Main heading: Land your dream role faster than ever"
             >
-              Find Your Dream Job<br />
-              in Minutes, Not Months
+              Land Your <span className="relative inline-block">
+                Dream Role
+                <svg
+                  className="absolute -bottom-1 left-0 w-full h-6"
+                  viewBox="0 0 200 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5 20 Q100 2 195 20"
+                    stroke="#92400e"
+                    strokeWidth="6"
+                    fill="none"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span><br />
+              Faster Than Ever
             </h1>
             <p className="text-center text-lg md:text-xl text-amber-800 font-medium mb-8 max-w-3xl mx-auto">
               Join thousands of professionals who found their perfect career match.
