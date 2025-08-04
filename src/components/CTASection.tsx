@@ -38,6 +38,9 @@ export default function CTASection() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
+          <div className="flex flex-col justify-center items-center">
+
+          </div>
           {/* Main Headline */}
           <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
             Ready to Find Your

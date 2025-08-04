@@ -17,6 +17,7 @@ export default function ConfigurationBanner() {
             <strong>Authentication not configured:</strong> To enable login/signup functionality, 
             please set up your Supabase credentials in <code className="bg-amber-100 px-1 rounded">.env.local</code>.
             {' '}
+            
             <a 
               href="#setup" 
               className="font-medium underline hover:text-amber-800 inline-flex items-center"

@@ -70,7 +70,7 @@ export default function FeaturesSection() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="p-8 h-full hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-t from-orange-200 to-amber-50">
+              <Card className="p-8 h-full hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-t from-orange-100 to-white-100">
                 <div className="flex flex-col items-center text-center">
                   {/* Icon */}
                   <div className="w-16 h-16 rounded-2xl bg-amber-700 flex items-center justify-center mb-6 shadow-lg">

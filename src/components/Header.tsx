@@ -1,35 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { useAuth } from '@/contexts/AuthContext'
-import LoginModal from './auth/LoginModal'
-import SignupModal from './auth/SignupModal'
 import UserProfile from './auth/UserProfile'
 
 export default function Header() {
-  const [showLoginModal, setShowLoginModal] = useState(false)
-  const [showSignupModal, setShowSignupModal] = useState(false)
+  const router = useRouter()
   const { user, loading } = useAuth()
 
   const handleLogin = () => {
-    setShowLoginModal(true)
+    router.push('/auth')
   }
 
   const handleSignup = () => {
-    setShowSignupModal(true)
-  }
-
-
-
-  const switchToSignup = () => {
-    setShowLoginModal(false)
-    setShowSignupModal(true)
-  }
-
-  const switchToLogin = () => {
-    setShowSignupModal(false)
-    setShowLoginModal(true)
+    router.push('/auth')
   }
 
   return (
@@ -79,17 +64,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Auth Modals */}
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        onSwitchToSignup={switchToSignup}
-      />
-      <SignupModal
-        isOpen={showSignupModal}
-        onClose={() => setShowSignupModal(false)}
-        onSwitchToLogin={switchToLogin}
-      />
+
     </header>
   )
 }

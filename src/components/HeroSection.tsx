@@ -1,264 +1,253 @@
 'use client'
 
-import { Code, Users, BarChart3, Palette, Megaphone } from "lucide-react"
-import { useEffect, useRef } from "react"
-import { gsap } from "gsap"
-import { motion } from "framer-motion"
-import { useReducedMotion } from "@/hooks/useReducedMotion"
-import { safeAnimate, ANIMATION_CONFIG } from "@/utils/animations"
-import { useSearch } from "@/contexts/SearchContext"
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { useSearch } from '@/contexts/SearchContext'
 
 export default function HeroSection() {
-
   const prefersReducedMotion = useReducedMotion()
   const { setSearchQuery } = useSearch()
-  const heroRef = useRef<HTMLDivElement>(null)
-  const titleRef = useRef<HTMLHeadingElement>(null)
 
+  const [role, setRole] = useState('')
+  const [location, setLocation] = useState('')
 
-  useEffect(() => {
-    if (!heroRef.current) return
+  const trending = ['Software Engineer', 'Product Manager', 'Data Scientist', 'UX Designer']
 
-    // Create entrance animation timeline
-    const tl = gsap.timeline({ delay: 0.2 })
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const q = [role.trim(), location.trim()].filter(Boolean).join(' ')
+    setSearchQuery(q)
+  }
 
-    // Set initial states
-    gsap.set([titleRef.current], {
-      opacity: 0,
-      y: 30
-    })
-
-    // Animate elements with stagger
-    safeAnimate(
-      prefersReducedMotion,
-      () => {
-        tl.to(titleRef.current, {
-          opacity: 1,
-          y: 0,
-          duration: ANIMATION_CONFIG.ENTRANCE,
-          ease: ANIMATION_CONFIG.EASE_OUT
-        })
-
-        return tl
-      },
-      () => {
-        // Fallback for reduced motion - show everything immediately
-        gsap.set([titleRef.current], {
-          opacity: 1,
-          y: 0
-        })
-      }
-    )
-
-    return () => {
-      tl.kill()
-    }
-  }, [prefersReducedMotion])
+  const containerAnim = prefersReducedMotion
+    ? {}
+    : { initial: { opacity: 0, y: 12 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.5 } }
 
   return (
     <section
-      ref={heroRef}
-      className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 pt-32 pb-24 relative overflow-hidden"
       aria-label="Hero section"
       data-section="hero"
+      className="relative overflow-hidden bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 pt-28 pb-20"
     >
-      {/* Falling Geometric Particles */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Large background circles */}
-        <div className="absolute -top-20 -right-20 w-80 h-80 bg-amber-200/20 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-orange-200/30 rounded-full blur-2xl"></div>
-
-        {/* Randomly Moving Particles with Custom Keyframes */}
-        <style jsx>{`
-          @keyframes float1 {
-            0% { transform: translate(0px, 0px) rotate(0deg); }
-            25% { transform: translate(30px, -20px) rotate(90deg); }
-            50% { transform: translate(-20px, 30px) rotate(180deg); }
-            75% { transform: translate(40px, 10px) rotate(270deg); }
-            100% { transform: translate(0px, 0px) rotate(360deg); }
-          }
-          @keyframes float2 {
-            0% { transform: translate(0px, 0px) rotate(0deg); }
-            25% { transform: translate(-25px, 35px) rotate(-90deg); }
-            50% { transform: translate(35px, -15px) rotate(-180deg); }
-            75% { transform: translate(-15px, -25px) rotate(-270deg); }
-            100% { transform: translate(0px, 0px) rotate(-360deg); }
-          }
-          @keyframes float3 {
-            0% { transform: translate(0px, 0px) rotate(0deg); }
-            33% { transform: translate(20px, 25px) rotate(120deg); }
-            66% { transform: translate(-30px, -10px) rotate(240deg); }
-            100% { transform: translate(0px, 0px) rotate(360deg); }
-          }
-          @keyframes float4 {
-            0% { transform: translate(0px, 0px) rotate(0deg); }
-            20% { transform: translate(-35px, 20px) rotate(-72deg); }
-            40% { transform: translate(15px, -30px) rotate(-144deg); }
-            60% { transform: translate(25px, 25px) rotate(-216deg); }
-            80% { transform: translate(-10px, -15px) rotate(-288deg); }
-            100% { transform: translate(0px, 0px) rotate(-360deg); }
-          }
-          @keyframes float5 {
-            0% { transform: translate(0px, 0px) rotate(0deg); }
-            50% { transform: translate(-40px, -30px) rotate(180deg); }
-            100% { transform: translate(0px, 0px) rotate(360deg); }
-          }
-          .float1 { animation: float1 6s ease-in-out infinite; }
-          .float2 { animation: float2 8s ease-in-out infinite; }
-          .float3 { animation: float3 7s ease-in-out infinite; }
-          .float4 { animation: float4 9s ease-in-out infinite; }
-          .float5 { animation: float5 5s ease-in-out infinite; }
-        `}</style>
-
-        {/* Squares - Randomly positioned and moving */}
-        <div className="absolute left-[7%] top-[20%] w-3 h-3 bg-amber-400/20 float1" style={{animationDelay: '0s'}}></div>
-        <div className="absolute left-[23%] top-[60%] w-4 h-4 bg-orange-300/15 float2" style={{animationDelay: '2s'}}></div>
-        <div className="absolute left-[41%] top-[35%] w-2 h-2 bg-amber-500/25 float3" style={{animationDelay: '4s'}}></div>
-        <div className="absolute left-[67%] top-[75%] w-5 h-5 bg-orange-400/15 float4" style={{animationDelay: '1s'}}></div>
-        <div className="absolute left-[84%] top-[15%] w-3 h-3 bg-amber-300/20 float5" style={{animationDelay: '3s'}}></div>
-        <div className="absolute left-[15%] top-[80%] w-4 h-4 bg-orange-500/18 float1" style={{animationDelay: '5s'}}></div>
-        <div className="absolute left-[92%] top-[45%] w-2 h-2 bg-amber-400/25 float2" style={{animationDelay: '1.5s'}}></div>
-
-        {/* Circles - Randomly positioned and moving */}
-        <div className="absolute left-[12%] top-[25%] w-4 h-4 bg-amber-400/18 rounded-full float3" style={{animationDelay: '1.5s'}}></div>
-        <div className="absolute left-[34%] top-[70%] w-3 h-3 bg-orange-300/20 rounded-full float4" style={{animationDelay: '3.5s'}}></div>
-        <div className="absolute left-[58%] top-[10%] w-5 h-5 bg-amber-500/15 rounded-full float5" style={{animationDelay: '0.5s'}}></div>
-        <div className="absolute left-[76%] top-[55%] w-2 h-2 bg-orange-400/25 rounded-full float1" style={{animationDelay: '2.5s'}}></div>
-        <div className="absolute left-[89%] top-[85%] w-4 h-4 bg-amber-300/18 rounded-full float2" style={{animationDelay: '4.5s'}}></div>
-        <div className="absolute left-[3%] top-[40%] w-3 h-3 bg-orange-500/20 rounded-full float3" style={{animationDelay: '6s'}}></div>
-        <div className="absolute left-[45%] top-[90%] w-2 h-2 bg-amber-400/28 rounded-full float4" style={{animationDelay: '0.8s'}}></div>
-
-        {/* Triangles - Randomly positioned and moving */}
-        <div className="absolute left-[18%] top-[30%] w-0 h-0 border-l-2 border-r-2 border-b-4 border-transparent border-b-amber-400/20 float5" style={{animationDelay: '2.2s'}}></div>
-        <div className="absolute left-[52%] top-[65%] w-0 h-0 border-l-3 border-r-3 border-b-6 border-transparent border-b-orange-300/18 float1" style={{animationDelay: '4.2s'}}></div>
-        <div className="absolute left-[71%] top-[20%] w-0 h-0 border-l-2 border-r-2 border-b-4 border-transparent border-b-amber-500/25 float2" style={{animationDelay: '6.2s'}}></div>
-        <div className="absolute left-[86%] top-[50%] w-0 h-0 border-l-3 border-r-3 border-b-6 border-transparent border-b-orange-400/15 float3" style={{animationDelay: '1.2s'}}></div>
-        <div className="absolute left-[9%] top-[75%] w-0 h-0 border-l-2 border-r-2 border-b-4 border-transparent border-b-amber-300/28 float4" style={{animationDelay: '3.2s'}}></div>
-
-        {/* Hexagons - Randomly positioned and moving */}
-        <div className="absolute left-[26%] top-[15%] w-4 h-4 bg-amber-400/18 float1" style={{clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)', animationDelay: '3.8s'}}></div>
-        <div className="absolute left-[63%] top-[85%] w-3 h-3 bg-orange-300/20 float2" style={{clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)', animationDelay: '5.8s'}}></div>
-        <div className="absolute left-[81%] top-[35%] w-5 h-5 bg-amber-500/15 float3" style={{clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)', animationDelay: '1.8s'}}></div>
-        <div className="absolute left-[5%] top-[60%] w-3 h-3 bg-orange-400/25 float4" style={{clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)', animationDelay: '4.8s'}}></div>
-
-        {/* Diamonds - Randomly positioned and moving */}
-        <div className="absolute left-[37%] top-[25%] w-3 h-3 bg-amber-400/20 float5" style={{clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', animationDelay: '2.7s'}}></div>
-        <div className="absolute left-[54%] top-[45%] w-4 h-4 bg-orange-300/18 float1" style={{clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', animationDelay: '4.7s'}}></div>
-        <div className="absolute left-[73%] top-[80%] w-2 h-2 bg-amber-500/25 float2" style={{clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', animationDelay: '6.7s'}}></div>
-        <div className="absolute left-[91%] top-[10%] w-5 h-5 bg-orange-400/15 float3" style={{clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', animationDelay: '0.7s'}}></div>
-        <div className="absolute left-[14%] top-[55%] w-3 h-3 bg-amber-300/20 float4" style={{clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', animationDelay: '5.7s'}}></div>
+      {/* Subtle decorative blobs (no complex animations) */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-amber-200/40 blur-3xl" />
+        <div className="absolute -bottom-32 -left-32 h-72 w-72 rounded-full bg-orange-200/40 blur-2xl" />
       </div>
 
-
-
-      <div className="max-w-6xl mx-auto px-8">
-        {/* Hero Content - Moved text up a bit */}
-        <div className="text-center pt-5 mb-20">
-          <div className="mb-12">
-            <h1
-              ref={titleRef}
-              className="text-5xl md:text-6xl lg:text-7xl font-semibold text-black mb-8 leading-tight tracking-tight"
-              style={{ fontFamily: '"Inter", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}
-              aria-label="Main heading: Land your dream role faster than ever"
-            >
-              Land Your <span className="relative inline-block">
-                Dream Role
-                <svg
-                  className="absolute -bottom-1 left-0 w-full h-6"
-                  viewBox="0 0 200 25"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M5 20 Q100 2 195 20"
-                    stroke="#92400e"
-                    strokeWidth="6"
-                    fill="none"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span><br />
-              Faster Than Ever
+      <div className="relative mx-auto max-w-7xl px-6 md:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+          {/* Left: copy + form */}
+          <motion.div {...containerAnim}>
+            <h1 className="text-4xl font-semibold leading-tight tracking-tight text-stone-900 sm:text-5xl lg:text-6xl">
+              Find your next role faster
             </h1>
-            <p className="text-center text-lg md:text-xl text-amber-800 font-medium mb-8 max-w-3xl mx-auto">
-              Join thousands of professionals who found their perfect career match.
-              Search from 5000+ jobs at top companies worldwide.
+            <p className="mt-4 max-w-2xl text-base text-stone-700 sm:text-lg">
+              Search 5,000+ roles at top companies worldwide.
             </p>
-          </div>
 
+            {/* Search Panel */}
+            <form onSubmit={onSubmit} className="mt-8" aria-label="Job search">
+              <div className="rounded-2xl border border-stone-200 bg-white/80 p-3 shadow-lg backdrop-blur">
+                <div className="flex flex-col gap-3 md:flex-row">
+                  <div className="flex-1">
+                    <label htmlFor="role" className="sr-only">
+                      Job title or keywords
+                    </label>
+                    <input
+                      id="role"
+                      name="role"
+                      type="text"
+                      value={role}
+                      onChange={(e) => setRole(e.target.value)}
+                      placeholder="Job title or keywords"
+                      className="w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-base text-stone-900 placeholder-stone-400 outline-none focus-visible:ring-2 focus-visible:ring-amber-700 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                      aria-label="Job title or keywords"
+                    />
+                  </div>
 
+                  <div className="flex-1">
+                    <label htmlFor="location" className="sr-only">
+                      Location (optional)
+                    </label>
+                    <input
+                      id="location"
+                      name="location"
+                      type="text"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      placeholder="Location (optional)"
+                      className="w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-base text-stone-900 placeholder-stone-400 outline-none focus-visible:ring-2 focus-visible:ring-amber-700 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                      aria-label="Location (optional)"
+                    />
+                  </div>
 
-          {/* Primary CTA Button */}
-          <motion.div
-            className="mb-12"
-            initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
-            animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-          >
-            <motion.button
-              className="bg-gradient-to-r from-amber-900 to-amber-800 hover:from-amber-800 hover:to-amber-700 text-white px-12 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200"
-              whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
-              whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
-            >
-              Start Job Search
-            </motion.button>
-          </motion.div>
-
-          {/* Live Stats Counter */}
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 max-w-4xl mx-auto"
-            initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
-            animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-          >
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-amber-900 mb-2">5K+</div>
-              <div className="text-gray-600 font-medium">Active Jobs</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-amber-900 mb-2">2.5K+</div>
-              <div className="text-gray-600 font-medium">Companies</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-amber-900 mb-2">95%</div>
-              <div className="text-gray-600 font-medium">Success Rate</div>
-            </div>
-          </motion.div>
-
-          {/* Trending Categories */}
-          <div className="flex flex-wrap justify-center items-center gap-3 mb-16">
-            <span className="text-sm text-amber-100 font-medium flex items-center gap-2">
-              <div className="w-2 h-2 bg-amber-1 rounded-full animate-pulse"></div>
-              Trending:
-            </span>
-            {[
-              { name: 'Software Engineer', icon: Code },
-              { name: 'Product Manager', icon: Users },
-              { name: 'Data Scientist', icon: BarChart3 },
-              { name: 'UX Designer', icon: Palette },
-              { name: 'Marketing Manager', icon: Megaphone }
-            ].map((category) => (
-              <motion.button
-                key={category.name}
-                className="group flex items-center gap-2 px-3 py-2 bg-white hover:bg-gray-50 border border-gray-200 hover:border-amber-300 text-gray-800 text-sm rounded-full transition-all duration-200 hover:shadow-sm"
-                onClick={() => setSearchQuery(category.name)}
-                whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
-                whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
-              >
-                <div className="w-4 h-4 bg-amber-700 rounded-full flex items-center justify-center shadow-sm">
-                  <category.icon className="w-2.5 h-2.5 text-white" style={{ filter: 'drop-shadow(0 0 0.5px white)' }} />
+                  <div className="md:self-stretch">
+                    <button
+                      type="submit"
+                      className="h-full w-full rounded-xl bg-amber-900 px-6 py-3 font-semibold text-white shadow-md transition-colors hover:bg-amber-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700 focus-visible:ring-offset-2 focus-visible:ring-offset-white md:w-auto"
+                    >
+                      Search jobs
+                    </button>
+                  </div>
                 </div>
-                <span className="font-medium">{category.name}</span>
-              </motion.button>
-            ))}
-          </div>
+              </div>
 
+              <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-stone-600">
+                <span className="inline-flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-amber-700" />
+                  5,000+ jobs
+                </span>
+                <span>Curated companies</span>
+                <span>Updated daily</span>
+              </div>
 
+              {/* Trending chips */}
+              <div className="mt-5 flex flex-wrap items-center gap-2">
+                <span className="text-xs font-medium uppercase tracking-wide text-stone-500">Trending:</span>
+                {trending.map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => setSearchQuery(t)}
+                    className="rounded-full border border-stone-300 bg-white px-3 py-1.5 text-sm font-medium text-stone-800 transition-colors hover:border-amber-300 hover:bg-amber-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                    aria-label={`Search trending: ${t}`}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
 
+              <div className="mt-4">
+                <a
+                  href="#featured-jobs"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    const el = document.getElementById('featured-jobs')
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  }}
+                  className="text-sm font-medium text-amber-900/80 underline-offset-4 hover:text-amber-900 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                  aria-label="Browse categories in Latest Opportunities section"
+                >
+                  Browse categories
+                </a>
+              </div>
+            </form>
+          </motion.div>
 
+          {/* Right: stacked job cards vignette */}
+          <motion.div
+            {...(prefersReducedMotion ? {} : { initial: { opacity: 0, y: 12 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.5, delay: 0.05 } })}
+            className="relative hidden justify-center lg:flex"
+            aria-hidden="true"
+          >
+            <div className="relative w-full max-w-lg h-[380px]">
+              {/* Subtle radial/dotted backdrop */}
+              <div
+                className="absolute inset-0 rounded-3xl"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle at 1px 1px, rgba(0,0,0,0.06) 1px, transparent 0), radial-gradient(circle at 1px 1px, rgba(0,0,0,0.03) 1px, transparent 0)",
+                  backgroundSize: "24px 24px, 48px 48px",
+                  backgroundPosition: "0 0, 12px 12px",
+                }}
+              />
+
+              {/* Brand blobs for depth */}
+              <div className="absolute -right-16 -top-10 h-56 w-56 rounded-full bg-amber-300/40 blur-3xl" />
+              <div className="absolute -left-16 -bottom-10 h-48 w-48 rounded-full bg-orange-300/40 blur-3xl" />
+
+              {/* Stacked cards */}
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center"
+                {...(prefersReducedMotion ? {} : { whileHover: { y: -4 } })}
+              >
+                <div className="relative w-[360px] h-[260px]">
+                  {/* Card 1 (back) */}
+                  <motion.div
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[200px] rounded-2xl border border-stone-200/70 bg-white/70 backdrop-blur-md shadow-lg rotate-[-8deg]"
+                    {...(prefersReducedMotion ? {} : { whileHover: { y: -2, x: -2 } })}
+                  >
+                    <div className="h-full w-full p-5">
+                      <div className="flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-full bg-stone-300/80" />
+                        <div>
+                          <div className="text-sm font-semibold leading-tight text-stone-800">Product Designer</div>
+                          <div className="text-xs text-stone-500">Globex</div>
+                        </div>
+                      </div>
+                      <div className="mt-4 space-y-2">
+                        <div className="h-3 w-full rounded bg-stone-200" />
+                        <div className="h-3 w-4/6 rounded bg-stone-200" />
+                      </div>
+                      <div className="mt-5 flex items-center gap-2">
+                        <span className="rounded-full bg-stone-100 px-2 py-1 text-xs text-stone-600">Hybrid</span>
+                        <span className="rounded-full bg-stone-100 px-2 py-1 text-xs text-stone-600">Design</span>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* Card 2 (middle) */}
+                  <motion.div
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[200px] rounded-2xl border border-stone-200/70 bg-white/75 backdrop-blur-md shadow-xl rotate-[0deg]"
+                    {...(prefersReducedMotion ? {} : { whileHover: { y: -3 } })}
+                  >
+                    <div className="h-full w-full p-5">
+                      <div className="flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-full bg-stone-300/80" />
+                        <div>
+                          <div className="text-sm font-semibold leading-tight text-stone-800">Senior Software Engineer</div>
+                          <div className="text-xs text-stone-500">Acme Inc</div>
+                        </div>
+                      </div>
+                      <div className="mt-4 space-y-2">
+                        <div className="h-3 w-full rounded bg-stone-200" />
+                        <div className="h-3 w-4/6 rounded bg-stone-200" />
+                        <div className="h-3 w-3/4 rounded bg-stone-200" />
+                      </div>
+                      <div className="mt-5 flex items-center justify-between">
+                        <div className="flex gap-2">
+                          <span className="rounded-full bg-stone-100 px-2 py-1 text-xs text-stone-600">Full-time</span>
+                          <span className="rounded-full bg-stone-100 px-2 py-1 text-xs text-stone-600">Remote</span>
+                        </div>
+                        <div className="rounded-full bg-amber-900/90 px-3 py-1.5 text-xs font-medium text-white">Apply</div>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* Card 3 (front) */}
+                  <motion.div
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[200px] rounded-2xl border border-stone-200/70 bg-white/80 backdrop-blur-md shadow-xl rotate-[8deg]"
+                    {...(prefersReducedMotion ? {} : { whileHover: { y: -4, x: 2 } })}
+                  >
+                    <div className="h-full w-full p-5">
+                      <div className="flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-full bg-stone-300/80" />
+                        <div>
+                          <div className="text-sm font-semibold leading-tight text-stone-800">Data Scientist</div>
+                          <div className="text-xs text-stone-500">Initech</div>
+                        </div>
+                      </div>
+                      <div className="mt-4 space-y-2">
+                        <div className="h-3 w-full rounded bg-stone-200" />
+                        <div className="h-3 w-5/6 rounded bg-stone-200" />
+                        <div className="h-3 w-2/3 rounded bg-stone-200" />
+                      </div>
+                      <div className="mt-5 flex items-center justify-between">
+                        <div className="flex gap-2">
+                          <span className="rounded-full bg-stone-100 px-2 py-1 text-xs text-stone-600">On-site</span>
+                          <span className="rounded-full bg-stone-100 px-2 py-1 text-xs text-stone-600">Analytics</span>
+                        </div>
+                        <div className="rounded-full bg-stone-200 px-3 py-1.5 text-xs font-medium text-stone-700">Details</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
-
-
       </div>
     </section>
   )
